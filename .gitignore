@@ -1,5 +1,5 @@
 .venv/
-.vercel/
+.vercel
 __pycache__/
 *.py[cod]
 assets/*.pdf
