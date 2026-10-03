@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Application: Shipment | NACCIMA e-Certificate (prototype)</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif&display=swap">
+<style>
+:root{--bg:#F5F7F6;--surface:#FFFFFF;--ink:#0F1A14;--ink2:#3B463F;--mute:#69746D;--line:#E3E9E6;--line2:#D5DDD9;--green:#02774A;--green-deep:#064E32;--green-brand:#038853;--tint:#E8F4EE;--blue:#0367BF;--red:#D90305;--slate:#38424B;--night:#0B1F17}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Geist','Inter',system-ui,sans-serif;color:#0F1A14;background:#F5F7F6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4,p{margin:0}
+.serif{font-family:'Geist','Inter',system-ui,sans-serif;font-weight:600;letter-spacing:-0.035em}
+.sf{font-family:'Instrument Serif',Georgia,serif;font-weight:400;letter-spacing:-0.01em}
+h1 em,h2 em,.serif em{font-style:normal;background:linear-gradient(95deg,#0A9A5B 0%,#0367BF 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.mono{font-family:'Geist Mono',ui-monospace,monospace}
+.tnum{font-variant-numeric:tabular-nums}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:#69746D}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 20px;border-radius:10px;font-size:14.5px;font-weight:600;white-space:nowrap;cursor:pointer;transition:background .15s,border-color .15s,box-shadow .15s,transform .15s}
+.btn-lg{height:52px;padding:0 26px;font-size:15.5px;border-radius:12px}
+.btn-sm{height:36px;padding:0 14px;font-size:13.5px;border-radius:9px}
+.btn-p{background:linear-gradient(180deg,#10A163 0%,#02774A 100%);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 1px 2px rgba(6,78,50,.35),0 8px 20px -6px rgba(2,119,74,.6)}
+.btn-p:hover{background:linear-gradient(180deg,#0E9059 0%,#066A43 100%);transform:translateY(-1px)}
+.btn-g{background:#fff;color:#0F1A14;border:1px solid #D5DDD9;box-shadow:0 1px 2px rgba(15,26,20,.05)}
+.btn-g:hover{border-color:#0F1A14}
+.btn-d{background:#0F1A14;color:#fff}
+.btn-d:hover{background:#26332B}
+.btn-r{background:#fff;color:#A60203;border:1px solid #F1C4C4}
+.btn-r:hover{background:#FDECEC}
+.chip{display:inline-flex;align-items:center;gap:7px;height:26px;padding:0 11px;border-radius:999px;font-size:12.5px;font-weight:600;white-space:nowrap}
+.chip i{width:6px;height:6px;border-radius:50%;display:inline-block;background:currentColor}
+.c-ok{background:#E8F4EE;color:#06603B}
+.c-warn{background:#FEF3E2;color:#92400E}
+.c-bad{background:#FDECEC;color:#A60203}
+.c-info{background:#E6F0FA;color:#03509A}
+.c-mute{background:#EBF0ED;color:#4A554E}
+.card{background:#fff;border:1px solid #E3E9E6;border-radius:18px;box-shadow:0 1px 2px rgba(15,26,20,.04),0 12px 32px -18px rgba(15,26,20,.14)}
+.lift{transition:transform .2s,box-shadow .2s,border-color .2s}
+.lift:hover{transform:translateY(-2px);border-color:#D5DDD9;box-shadow:0 1px 2px rgba(15,26,20,.05),0 18px 40px -18px rgba(15,26,20,.22)}
+.lbl{font-size:13px;font-weight:600;color:#26332B}
+.hint{font-size:12.5px;color:#69746D}
+.input{width:100%;height:46px;padding:0 14px;border:1px solid #D5DDD9;border-radius:10px;background:#fff;font-family:inherit;font-size:15px;color:#0F1A14;transition:border-color .15s,box-shadow .15s}
+.input:hover{border-color:#9CA69F}
+.input:focus{outline:none;border-color:#02774A;box-shadow:0 0 0 4px rgba(2,119,74,.14)}
+.input-bad{border-color:#D90305;background:#FFF9F9}
+.input-bad:focus{border-color:#D90305;box-shadow:0 0 0 4px rgba(217,3,5,.12)}
+.navl{display:flex;align-items:center;gap:12px;height:40px;padding:0 12px;border-radius:9px;font-size:14px;font-weight:500;color:#3B463F;transition:background .12s,color .12s}
+.navl:hover{background:#EEF2F0;color:#0F1A14}
+.navl.on{background:#E8F4EE;color:#064E32;font-weight:600}
+.tr{transition:background .12s}
+.tr:hover{background:#F9FBFA}
+.link{color:#02774A;font-weight:600}
+.link:hover{text-decoration:underline}
+.pub a.pl{color:#3B463F;font-size:14.5px;font-weight:500;transition:color .12s}
+.pub a.pl:hover{color:#02774A}
+details>summary{list-style:none;cursor:pointer}
+details>summary::-webkit-details-marker{display:none}
+.noprint{}
+@media print{.noprint{display:none}}
+</style>
+
+
+</head>
+<body>
+
+<div style="width:100%;min-height:1000px;background:#F5F7F6;color:#0F1A14"><div style="min-height:1000px;display:flex;flex-direction:column">
+<header style="background:#fff;border-bottom:1px solid #E3E9E6">
+<div style="max-width:1240px;margin:0 auto;padding:0 40px;height:68px;display:flex;align-items:center;justify-content:space-between">
+<div style="display:flex;align-items:center;gap:18px"><a href="Dashboard.html"><div style="display:flex;align-items:center;gap:11px"><img src="assets/naccima-logo.png" alt="NACCIMA logo" style="width:35px;height:38px;object-fit:contain"><span style="font-weight:700;font-size:16px;color:#0F1A14">NACCIMA</span></div></a><span style="width:1px;height:22px;background:#E3E9E6"></span><span style="font-size:14.5px;font-weight:600">New application</span></div>
+<div style="display:flex;align-items:center;gap:22px"><span class="hint" style="display:flex;align-items:center;gap:7px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#02774A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M5 12.5l4.5 4.5L19 7"/></svg>Draft saved 2 minutes ago</span><a class="btn btn-g btn-sm" href="Dashboard.html" style="">Save and exit</a></div>
+</div>
+</header>
+<div style="max-width:1240px;width:100%;margin:0 auto;padding:40px 40px 64px;display:grid;grid-template-columns:200px minmax(0,1fr) 312px;gap:44px;align-items:start">
+<nav style="display:flex;flex-direction:column;position:sticky;top:24px"><a href="CertificateType.html" style="position:relative;display:flex;align-items:center;gap:12px;height:56px;padding-top:0"><span style="width:28px;height:28px;border-radius:50%;background:#02774A;color:#fff;display:flex;align-items:center;justify-content:center"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span><span style="position:absolute;left:13px;top:34px;width:2px;height:22px;background:#02774A"></span><span style="font-size:14.5px;font-weight:500;color:#0F1A14">Certificate type</span></a><a href="Application.html" style="position:relative;display:flex;align-items:center;gap:12px;height:56px;padding-top:0"><span style="width:28px;height:28px;border-radius:50%;background:#02774A;color:#fff;display:flex;align-items:center;justify-content:center"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span><span style="position:absolute;left:13px;top:34px;width:2px;height:22px;background:#02774A"></span><span style="font-size:14.5px;font-weight:500;color:#0F1A14">Goods</span></a><a href="Shipment.html" style="position:relative;display:flex;align-items:center;gap:12px;height:56px;padding-top:0"><span style="width:28px;height:28px;border-radius:50%;background:#fff;border:2px solid #02774A;color:#02774A;font-size:12.5px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 4px rgba(2,119,74,.14)">3</span><span style="position:absolute;left:13px;top:34px;width:2px;height:22px;background:#E3E9E6"></span><span style="font-size:14.5px;font-weight:700;color:#0F1A14">Shipment</span></a><a href="Documents.html" style="position:relative;display:flex;align-items:center;gap:12px;height:56px;padding-top:0"><span style="width:28px;height:28px;border-radius:50%;background:#fff;border:1.5px solid #D5DDD9;color:#69746D;font-size:12.5px;font-weight:600;display:flex;align-items:center;justify-content:center">4</span><span style="position:absolute;left:13px;top:34px;width:2px;height:22px;background:#E3E9E6"></span><span style="font-size:14.5px;font-weight:500;color:#69746D">Documents</span></a><a href="Checkout.html" style="position:relative;display:flex;align-items:center;gap:12px;height:56px;padding-top:0"><span style="width:28px;height:28px;border-radius:50%;background:#fff;border:1.5px solid #D5DDD9;color:#69746D;font-size:12.5px;font-weight:600;display:flex;align-items:center;justify-content:center">5</span><span style="font-size:14.5px;font-weight:500;color:#69746D">Review and pay</span></a></nav>
+<section style="display:flex;flex-direction:column;gap:24px;min-width:0"><div class="card" style="padding:36px;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;flex-direction:column;gap:8px"><h1 class="serif" style="font-size:32px;line-height:1.1">Shipment and consignee</h1><p style="font-size:15px;color:#69746D;line-height:1.5">Tell us who receives the goods and how they travel.</p></div>
+<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px">
+<div style="display:flex;flex-direction:column;gap:7px;"><label class="lbl" for="cn">Consignee name</label><input class="input" id="cn" type="text" value="Sample Importer BV"><span class="hint">Must match the buyer on your invoice and bill of lading.</span></div>
+<div style="display:flex;flex-direction:column;gap:7px;"><label class="lbl" for="cc">Destination country</label><input class="input" id="cc" type="text" value="Netherlands"></div>
+<div style="display:flex;flex-direction:column;gap:7px;grid-column:span 2;"><label class="lbl" for="ca">Consignee address</label><input class="input" id="ca" type="text" value="[Street address], Rotterdam"></div>
+<div style="display:flex;flex-direction:column;gap:7px;grid-column:span 2"><span class="lbl">Mode of transport</span><div style="display:flex;padding:3px;background:#EDF1EF;border-radius:11px"><span style="flex:1;height:40px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:#fff;box-shadow:0 1px 2px rgba(15,26,20,.12);font-size:14px;font-weight:600">Sea freight</span><span style="flex:1;height:40px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:500;color:#69746D">Air freight</span><span style="flex:1;height:40px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:500;color:#69746D">Road</span></div></div>
+<div style="display:flex;flex-direction:column;gap:7px;"><label class="lbl" for="pol">Port of loading</label><input class="input" id="pol" type="text" value="Apapa, Lagos"></div><div style="display:flex;flex-direction:column;gap:7px;"><label class="lbl" for="pod">Port of discharge</label><input class="input" id="pod" type="text" value="Rotterdam"></div>
+<div style="display:flex;flex-direction:column;gap:7px;"><label class="lbl" for="ship">Expected shipping date</label><input class="input" id="ship" type="text" value="15 Oct 2026"><span class="hint">Certificates are normally issued before goods ship.</span></div>
+<div style="display:flex;flex-direction:column;gap:7px;"><label class="lbl" for="vsl">Vessel or flight (optional)</label><input class="input" id="vsl" type="text" value="" placeholder="[Vessel name]"></div>
+</div>
+<div style="display:flex;justify-content:space-between;align-items:center;padding-top:24px;border-top:1px solid #EDF1EF"><a class="btn btn-g btn-lg" href="Application.html" style=""><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>Back</a><a class="btn btn-p btn-lg" href="Documents.html" style="">Continue to documents<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div></section>
+<aside style="display:flex;flex-direction:column;gap:18px"><div class="card" style="padding:22px;display:flex;flex-direction:column;gap:14px"><h2 style="font-size:15px;font-weight:700">Application summary</h2><div style="display:flex;justify-content:space-between;gap:12px;font-size:14px"><span style="color:#69746D">Exporter</span><span style="font-weight:600;text-align:right">Sample Exporter Ltd</span></div><div style="display:flex;justify-content:space-between;gap:12px;font-size:14px"><span style="color:#69746D">Certificate type</span><span style="font-weight:600;text-align:right">NACCIMA Certificate of Origin</span></div><div style="display:flex;justify-content:space-between;gap:12px;font-size:14px"><span style="color:#69746D">Goods</span><span style="font-weight:600;text-align:right">Cocoa beans, 20 t</span></div><div style="display:flex;justify-content:space-between;gap:12px;font-size:14px"><span style="color:#69746D">Destination</span><span style="font-weight:600;text-align:right">Netherlands</span></div><div style="display:flex;justify-content:space-between;align-items:center;font-size:14px"><span style="color:#69746D">Membership</span><span class="chip c-ok"><i></i>Active</span></div></div><div class="card" style="padding:22px;display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:15px;font-weight:700">Estimated total</span><span class="chip c-ok"><i></i>Member rate</span></div>
+<span class="serif tnum" style="font-size:40px;line-height:1">₦31,500</span>
+<span class="hint">Sample amounts. Final fees are set by NACCIMA and shown at payment.</span></div><div style="border-radius:16px;background:#E8F4EE;padding:20px;display:flex;flex-direction:column;gap:8px"><div style="display:flex;align-items:center;gap:8px;color:#064E32;font-weight:700;font-size:14px"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>Before you continue</div><p style="font-size:13.5px;line-height:1.55;color:#0B3B2E">Double check the consignee spelling. It is printed on the certificate and checked by customs at the destination.</p></div></aside>
+</div>
+</div></div>
+
+<script>
+(() => {
+	const labels = ['Sea freight', 'Air freight', 'Road'];
+	const options = Array.from(document.querySelectorAll('span')).filter((element) => labels.includes(element.textContent.trim()));
+	if (options.length !== 3) return;
+
+	const details = {
+		'Sea freight': 'Bill of lading',
+		'Air freight': 'Air waybill',
+		Road: 'Road consignment note'
+	};
+	const group = options[0].parentElement;
+	const hint = document.createElement('p');
+	hint.style.cssText = 'margin:8px 0 0;color:#69746D;font-size:12.5px;line-height:1.5';
+	group.insertAdjacentElement('afterend', hint);
+
+	const select = (label) => {
+		localStorage.setItem('naccima-transport-mode', label);
+		options.forEach((option) => {
+			const active = option.textContent.trim() === label;
+			option.setAttribute('role', 'radio');
+			option.setAttribute('aria-checked', String(active));
+			option.tabIndex = active ? 0 : -1;
+			option.style.cursor = 'pointer';
+			option.style.background = active ? '#fff' : 'transparent';
+			option.style.boxShadow = active ? '0 1px 2px rgba(15,26,20,.12)' : 'none';
+			option.style.color = active ? '#0F1A14' : '#69746D';
+			option.style.fontWeight = active ? '600' : '500';
+		});
+		hint.textContent = `Required transport document: ${details[label]}. Your checklist updates on the next step.`;
+	};
+
+	options.forEach((option) => {
+		option.addEventListener('click', () => select(option.textContent.trim()));
+		option.addEventListener('keydown', (event) => {
+			if (event.key === 'Enter' || event.key === ' ') {
+				event.preventDefault();
+				select(option.textContent.trim());
+			}
+		});
+	});
+	select(labels.includes(localStorage.getItem('naccima-transport-mode')) ? localStorage.getItem('naccima-transport-mode') : 'Sea freight');
+})();
+</script>
+
+</body>
+</html>

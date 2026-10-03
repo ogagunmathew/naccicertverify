@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Officer Review Queue | NACCIMA e-Certificate (prototype)</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif&display=swap">
+<style>
+:root{--bg:#F5F7F6;--surface:#FFFFFF;--ink:#0F1A14;--ink2:#3B463F;--mute:#69746D;--line:#E3E9E6;--line2:#D5DDD9;--green:#02774A;--green-deep:#064E32;--green-brand:#038853;--tint:#E8F4EE;--blue:#0367BF;--red:#D90305;--slate:#38424B;--night:#0B1F17}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Geist','Inter',system-ui,sans-serif;color:#0F1A14;background:#F5F7F6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4,p{margin:0}
+.serif{font-family:'Geist','Inter',system-ui,sans-serif;font-weight:600;letter-spacing:-0.035em}
+.sf{font-family:'Instrument Serif',Georgia,serif;font-weight:400;letter-spacing:-0.01em}
+h1 em,h2 em,.serif em{font-style:normal;background:linear-gradient(95deg,#0A9A5B 0%,#0367BF 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.mono{font-family:'Geist Mono',ui-monospace,monospace}
+.tnum{font-variant-numeric:tabular-nums}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:#69746D}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 20px;border-radius:10px;font-size:14.5px;font-weight:600;white-space:nowrap;cursor:pointer;transition:background .15s,border-color .15s,box-shadow .15s,transform .15s}
+.btn-lg{height:52px;padding:0 26px;font-size:15.5px;border-radius:12px}
+.btn-sm{height:36px;padding:0 14px;font-size:13.5px;border-radius:9px}
+.btn-p{background:linear-gradient(180deg,#10A163 0%,#02774A 100%);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 1px 2px rgba(6,78,50,.35),0 8px 20px -6px rgba(2,119,74,.6)}
+.btn-p:hover{background:linear-gradient(180deg,#0E9059 0%,#066A43 100%);transform:translateY(-1px)}
+.btn-g{background:#fff;color:#0F1A14;border:1px solid #D5DDD9;box-shadow:0 1px 2px rgba(15,26,20,.05)}
+.btn-g:hover{border-color:#0F1A14}
+.btn-d{background:#0F1A14;color:#fff}
+.btn-d:hover{background:#26332B}
+.btn-r{background:#fff;color:#A60203;border:1px solid #F1C4C4}
+.btn-r:hover{background:#FDECEC}
+.chip{display:inline-flex;align-items:center;gap:7px;height:26px;padding:0 11px;border-radius:999px;font-size:12.5px;font-weight:600;white-space:nowrap}
+.chip i{width:6px;height:6px;border-radius:50%;display:inline-block;background:currentColor}
+.c-ok{background:#E8F4EE;color:#06603B}
+.c-warn{background:#FEF3E2;color:#92400E}
+.c-bad{background:#FDECEC;color:#A60203}
+.c-info{background:#E6F0FA;color:#03509A}
+.c-mute{background:#EBF0ED;color:#4A554E}
+.card{background:#fff;border:1px solid #E3E9E6;border-radius:18px;box-shadow:0 1px 2px rgba(15,26,20,.04),0 12px 32px -18px rgba(15,26,20,.14)}
+.lift{transition:transform .2s,box-shadow .2s,border-color .2s}
+.lift:hover{transform:translateY(-2px);border-color:#D5DDD9;box-shadow:0 1px 2px rgba(15,26,20,.05),0 18px 40px -18px rgba(15,26,20,.22)}
+.lbl{font-size:13px;font-weight:600;color:#26332B}
+.hint{font-size:12.5px;color:#69746D}
+.input{width:100%;height:46px;padding:0 14px;border:1px solid #D5DDD9;border-radius:10px;background:#fff;font-family:inherit;font-size:15px;color:#0F1A14;transition:border-color .15s,box-shadow .15s}
+.input:hover{border-color:#9CA69F}
+.input:focus{outline:none;border-color:#02774A;box-shadow:0 0 0 4px rgba(2,119,74,.14)}
+.input-bad{border-color:#D90305;background:#FFF9F9}
+.input-bad:focus{border-color:#D90305;box-shadow:0 0 0 4px rgba(217,3,5,.12)}
+.navl{display:flex;align-items:center;gap:12px;height:40px;padding:0 12px;border-radius:9px;font-size:14px;font-weight:500;color:#3B463F;transition:background .12s,color .12s}
+.navl:hover{background:#EEF2F0;color:#0F1A14}
+.navl.on{background:#E8F4EE;color:#064E32;font-weight:600}
+.tr{transition:background .12s}
+.tr:hover{background:#F9FBFA}
+.link{color:#02774A;font-weight:600}
+.link:hover{text-decoration:underline}
+.pub a.pl{color:#3B463F;font-size:14.5px;font-weight:500;transition:color .12s}
+.pub a.pl:hover{color:#02774A}
+details>summary{list-style:none;cursor:pointer}
+details>summary::-webkit-details-marker{display:none}
+.noprint{}
+@media print{.noprint{display:none}}
+</style>
+
+
+</head>
+<body>
+
+<div style="width:100%;min-height:1200px;background:#F5F7F6;color:#0F1A14"><div style="display:flex;min-height:1200px">
+<aside style="width:264px;flex:none;background:#fff;border-right:1px solid #E3E9E6;padding:24px 16px;display:flex;flex-direction:column;gap:28px;min-height:100%">
+<a href="index.html" style="padding:0 8px"><div style="display:flex;align-items:center;gap:11px"><img src="assets/naccima-logo.png" alt="NACCIMA logo" style="width:37px;height:40px;object-fit:contain"><div style="display:flex;flex-direction:column;line-height:1.1"><span style="font-weight:700;font-size:17px;letter-spacing:.01em;color:#0F1A14">NACCIMA</span><span style="font-size:12px;color:#69746D;font-weight:500">e-Certificate</span></div></div></a>
+<nav style="display:flex;flex-direction:column;gap:3px"><a class="navl on" href="Review.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><circle cx="12" cy="9" r="6"/><path d="M8.5 14l-1.5 7 5-3 5 3-1.5-7"/></svg><span>Review queue</span></a><a class="navl" href="Certificate.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg><span>Issued certificates</span></a><a class="navl" href="CertificateTypesAdmin.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg><span>Certificate types</span></a><a class="navl" href="Verify.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><span>Verify a certificate</span></a><a class="navl" href="Dashboard.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>Exporter view</span></a></nav>
+<div style="margin-top:auto;display:flex;flex-direction:column;gap:14px">
+<details style="border-top:1px solid #E3E9E6;padding-top:14px">
+<summary class="navl" style="height:34px;font-size:13px;color:#69746D"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M9 3h6M10 3v6L4 19a2 2 0 0 0 2 3h12a2 2 0 0 0 2-3l-6-10V3"/></svg><span>Prototype states</span><span style="margin-left:auto"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M6 9l6 6 6-6"/></svg></span></summary>
+<div style="display:flex;flex-direction:column;gap:1px;padding-top:4px"><a class="navl" href="Review.html" style="height:34px;font-size:13px;color:#69746D">Officer queue</a><a class="navl" href="DashboardEmpty.html" style="height:34px;font-size:13px;color:#69746D">Empty dashboard</a><a class="navl" href="Returned.html" style="height:34px;font-size:13px;color:#69746D">Returned application</a><a class="navl" href="ApplicationError.html" style="height:34px;font-size:13px;color:#69746D">Validation errors</a><a class="navl" href="PaymentFailed.html" style="height:34px;font-size:13px;color:#69746D">Payment failed</a><a class="navl" href="MembershipExpired.html" style="height:34px;font-size:13px;color:#69746D">Expired membership</a></div>
+</details>
+<div style="display:flex;align-items:center;gap:11px;padding:10px;border:1px solid #E3E9E6;border-radius:12px">
+<div style="width:36px;height:36px;border-radius:50%;background:#064E32;color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center">CO</div>
+<div style="display:flex;flex-direction:column;line-height:1.25;min-width:0"><span style="font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">[Officer name]</span><span class="hint">[CHAMBER] officer</span></div>
+</div>
+</div>
+</aside>
+<main style="flex:1;min-width:0;padding:28px 40px 56px;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:20px">
+<div style="display:flex;align-items:center;gap:10px;height:42px;width:380px;max-width:100%;padding:0 14px;background:#fff;border:1px solid #E3E9E6;border-radius:11px;color:#69746D;font-size:14px"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><span style="flex:1">Search by reference, exporter or goods</span><span class="mono" style="font-size:11.5px;border:1px solid #E3E9E6;border-radius:6px;padding:2px 6px;background:#F5F7F6">Ctrl K</span></div>
+<div style="display:flex;align-items:center;gap:12px"><span style="width:42px;height:42px;border-radius:11px;background:#fff;border:1px solid #E3E9E6;display:flex;align-items:center;justify-content:center;position:relative"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M6 9a6 6 0 1 1 12 0c0 5 2 6 2 6H4s2-1 2-6M10 20a2 2 0 0 0 4 0"/></svg><i style="position:absolute;top:10px;right:11px;width:8px;height:8px;border-radius:50%;background:#D90305;border:2px solid #fff"></i></span></div>
+</div>
+<div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px"><div style="display:flex;flex-direction:column;gap:8px"><h1 class="serif" style="font-size:34px;line-height:1.1">Review queue</h1><p style="font-size:15px;color:#69746D;max-width:560px;line-height:1.5">Decisions are signed and logged against your name.</p></div></div>
+<div style="display:grid;grid-template-columns:340px minmax(0,1fr);gap:24px;align-items:start"><div style="display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;padding:3px;background:#EDF1EF;border-radius:11px">
+<span style="flex:1;height:34px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:#fff;box-shadow:0 1px 2px rgba(15,26,20,.12);font-size:13px;font-weight:600">To review 5</span>
+<span style="flex:1;height:34px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:#69746D">Returned 2</span>
+<span style="flex:1;height:34px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:#69746D">Signed</span></div>
+<a href="Review.html" class="lift" style="background:#E8F4EE;border-color:#A9D8C0;display:flex;flex-direction:column;gap:8px;padding:14px 16px;border:1px solid;border-radius:13px">
+<div style="display:flex;justify-content:space-between;align-items:center"><span class="mono" style="font-size:12.5px;font-weight:500">NAC-2026-004218</span><span class="chip c-warn"><i></i>Ready</span></div>
+<span style="font-size:14.5px;font-weight:600">Cocoa beans, 20 t</span><span style="font-size:12.5px;color:#02774A;font-weight:600">NACCIMA Certificate of Origin</span><div style="display:flex;justify-content:space-between;font-size:12.5px;color:#69746D"><span>Sample Exporter Ltd</span><span style="color:#A60203;font-size:12px;font-weight:600">Due today</span></div></a>
+<a href="Review.html" class="lift" style="background:#fff;border-color:#E3E9E6;display:flex;flex-direction:column;gap:8px;padding:14px 16px;border:1px solid;border-radius:13px">
+<div style="display:flex;justify-content:space-between;align-items:center"><span class="mono" style="font-size:12.5px;font-weight:500">NAC-2026-004221</span><span class="chip c-warn"><i></i>Ready</span></div>
+<span style="font-size:14.5px;font-weight:600">Ginger, 8 t</span><span style="font-size:12.5px;color:#02774A;font-weight:600">GSP Certificate</span><div style="display:flex;justify-content:space-between;font-size:12.5px;color:#69746D"><span>[Exporter B]</span><span class="hint">Waiting 2h</span></div></a>
+<a href="Review.html" class="lift" style="background:#fff;border-color:#E3E9E6;display:flex;flex-direction:column;gap:8px;padding:14px 16px;border:1px solid;border-radius:13px">
+<div style="display:flex;justify-content:space-between;align-items:center"><span class="mono" style="font-size:12.5px;font-weight:500">NAC-2026-004224</span><span class="chip c-info"><i></i>Checking</span></div>
+<span style="font-size:14.5px;font-weight:600">Palm kernel, 15 t</span><span style="font-size:12.5px;color:#02774A;font-weight:600">Movement Certificate</span><div style="display:flex;justify-content:space-between;font-size:12.5px;color:#69746D"><span>[Exporter C]</span><span class="hint">Waiting 2h</span></div></a>
+<a href="Review.html" class="lift" style="background:#fff;border-color:#E3E9E6;display:flex;flex-direction:column;gap:8px;padding:14px 16px;border:1px solid;border-radius:13px">
+<div style="display:flex;justify-content:space-between;align-items:center"><span class="mono" style="font-size:12.5px;font-weight:500">NAC-2026-004230</span><span class="chip c-warn"><i></i>Ready</span></div>
+<span style="font-size:14.5px;font-weight:600">Sesame seed, 10 t</span><span style="font-size:12.5px;color:#02774A;font-weight:600">Solid Mineral Certificate</span><div style="display:flex;justify-content:space-between;font-size:12.5px;color:#69746D"><span>[Exporter D]</span><span class="hint">Waiting 2h</span></div></a>
+<a href="Review.html" class="lift" style="background:#fff;border-color:#E3E9E6;display:flex;flex-direction:column;gap:8px;padding:14px 16px;border:1px solid;border-radius:13px">
+<div style="display:flex;justify-content:space-between;align-items:center"><span class="mono" style="font-size:12.5px;font-weight:500">NAC-2026-004233</span><span class="chip c-warn"><i></i>Ready</span></div>
+<span style="font-size:14.5px;font-weight:600">Hibiscus, 5 t</span><span style="font-size:12.5px;color:#02774A;font-weight:600">ECOWAS Free Trade Certificate</span><div style="display:flex;justify-content:space-between;font-size:12.5px;color:#69746D"><span>[Exporter E]</span><span class="hint">Waiting 2h</span></div></a></div><div class="card" style="padding:28px;display:flex;flex-direction:column;gap:24px">
+<div style="display:flex;justify-content:space-between;align-items:flex-start"><div style="display:flex;flex-direction:column;gap:6px"><div style="display:flex;align-items:center;gap:12px"><span class="mono" style="font-size:15px;font-weight:500">NAC-2026-004218</span><span class="chip c-warn"><i></i>Ready for review</span></div>
+<h2 class="serif" style="font-size:28px;line-height:1.15">Cocoa beans, 20 t to Netherlands</h2><span class="hint">NACCIMA Certificate of Origin · Sample Exporter Ltd · Submitted today 10:42 · Member NAC-M-018274</span></div></div>
+<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 28px;padding:20px;border-radius:14px;background:#F9FBFA;border:1px solid #EDF1EF">
+<div style="display:flex;gap:12px;align-items:flex-start"><span style="width:28px;height:28px;border-radius:50%;background:#E8F4EE;color:#02774A;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>
+<div style="display:flex;flex-direction:column;gap:1px"><span style="font-size:14px;font-weight:600">Invoice number matches</span><span class="hint">INV-2026-0318 on both</span></div></div><div style="display:flex;gap:12px;align-items:flex-start"><span style="width:28px;height:28px;border-radius:50%;background:#E8F4EE;color:#02774A;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>
+<div style="display:flex;flex-direction:column;gap:1px"><span style="font-size:14px;font-weight:600">HS code fits description</span><span class="hint">1801.00 for cocoa beans</span></div></div>
+<div style="display:flex;gap:12px;align-items:flex-start"><span style="width:28px;height:28px;border-radius:50%;background:#E8F4EE;color:#02774A;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>
+<div style="display:flex;flex-direction:column;gap:1px"><span style="font-size:14px;font-weight:600">Membership is active</span><span class="hint">Valid until 31 Dec 2026</span></div></div><div style="display:flex;gap:12px;align-items:flex-start"><span style="width:28px;height:28px;border-radius:50%;background:#FEF3E2;color:#92400E;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17h.01"/></svg></span>
+<div style="display:flex;flex-direction:column;gap:1px"><span style="font-size:14px;font-weight:600">Gross weight differs slightly</span><span class="hint">Declared 20,640 kg, invoice 20,600 kg</span></div></div></div>
+<div><div style="display:grid;grid-template-columns:150px 1fr 1fr 28px;gap:14px;padding-bottom:10px;font-size:11.5px;font-weight:600;letter-spacing:.08em;color:#69746D"><span></span><span>DECLARED</span><span>ON INVOICE</span><span></span></div>
+<div style="display:grid;grid-template-columns:150px 1fr 1fr 28px;gap:14px;align-items:center;padding:12px 0;border-top:1px solid #EDF1EF;font-size:14px"><span style="color:#69746D">Description</span><span style="font-weight:600">Dried fermented cocoa beans</span><span style="font-weight:600">Dried fermented cocoa beans</span><span style="color:#02774A"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span></div><div style="display:grid;grid-template-columns:150px 1fr 1fr 28px;gap:14px;align-items:center;padding:12px 0;border-top:1px solid #EDF1EF;font-size:14px"><span style="color:#69746D">Quantity</span><span style="font-weight:600">20,000 kg</span><span style="font-weight:600">20,000 kg</span><span style="color:#02774A"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span></div><div style="display:grid;grid-template-columns:150px 1fr 1fr 28px;gap:14px;align-items:center;padding:12px 0;border-top:1px solid #EDF1EF;font-size:14px"><span style="color:#69746D">Gross weight</span><span style="font-weight:600">20,640 kg</span><span style="font-weight:600">20,600 kg</span><span style="color:#92400E"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17h.01"/></svg></span></div><div style="display:grid;grid-template-columns:150px 1fr 1fr 28px;gap:14px;align-items:center;padding:12px 0;border-top:1px solid #EDF1EF;font-size:14px"><span style="color:#69746D">Consignee</span><span style="font-weight:600">Sample Importer BV</span><span style="font-weight:600">Sample Importer BV</span><span style="color:#02774A"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span></div></div>
+<div style="display:flex;gap:12px">
+<div style="flex:1;display:flex;gap:12px;align-items:center;padding:14px;border:1px solid #E3E9E6;border-radius:12px"><span style="color:#064E32"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg></span><div style="display:flex;flex-direction:column"><span style="font-size:13.5px;font-weight:600">Commercial invoice</span><span class="hint">412 KB</span></div><span style="margin-left:auto" class="link"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span></div>
+<div style="flex:1;display:flex;gap:12px;align-items:center;padding:14px;border:1px solid #E3E9E6;border-radius:12px"><span style="color:#064E32"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg></span><div style="display:flex;flex-direction:column"><span style="font-size:13.5px;font-weight:600">Packing list</span><span class="hint">188 KB</span></div><span style="margin-left:auto" class="link"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span></div>
+<div style="flex:1;display:flex;gap:12px;align-items:center;padding:14px;border:1px solid #E3E9E6;border-radius:12px"><span style="color:#064E32"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg></span><div style="display:flex;flex-direction:column"><span style="font-size:13.5px;font-weight:600">Producer declaration</span><span class="hint">96 KB</span></div><span style="margin-left:auto" class="link"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span></div></div>
+<div style="display:flex;flex-direction:column;gap:7px"><label class="lbl" for="note">Note to exporter (optional)</label><input class="input" id="note" type="text" placeholder="Add a short note"></div>
+<div style="display:flex;justify-content:space-between;align-items:center;padding-top:22px;border-top:1px solid #EDF1EF">
+<div style="display:flex;gap:10px"><a class="btn btn-r" href="Review.html" style="">Reject</a><a class="btn btn-g" href="Returned.html" style="">Request changes</a></div><a class="btn btn-p btn-lg" href="Certificate.html" style=""><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>Approve and sign</a></div></div></div>
+</main>
+</div></div>
+
+
+</body>
+</html>

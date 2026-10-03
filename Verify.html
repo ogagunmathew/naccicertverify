@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Verify a Certificate | NACCIMA e-Certificate (prototype)</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif&display=swap">
+<style>
+:root{--bg:#F5F7F6;--surface:#FFFFFF;--ink:#0F1A14;--ink2:#3B463F;--mute:#69746D;--line:#E3E9E6;--line2:#D5DDD9;--green:#02774A;--green-deep:#064E32;--green-brand:#038853;--tint:#E8F4EE;--blue:#0367BF;--red:#D90305;--slate:#38424B;--night:#0B1F17}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Geist','Inter',system-ui,sans-serif;color:#0F1A14;background:#F5F7F6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4,p{margin:0}
+.serif{font-family:'Geist','Inter',system-ui,sans-serif;font-weight:600;letter-spacing:-0.035em}
+.sf{font-family:'Instrument Serif',Georgia,serif;font-weight:400;letter-spacing:-0.01em}
+h1 em,h2 em,.serif em{font-style:normal;background:linear-gradient(95deg,#0A9A5B 0%,#0367BF 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.mono{font-family:'Geist Mono',ui-monospace,monospace}
+.tnum{font-variant-numeric:tabular-nums}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:#69746D}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 20px;border-radius:10px;font-size:14.5px;font-weight:600;white-space:nowrap;cursor:pointer;transition:background .15s,border-color .15s,box-shadow .15s,transform .15s}
+.btn-lg{height:52px;padding:0 26px;font-size:15.5px;border-radius:12px}
+.btn-sm{height:36px;padding:0 14px;font-size:13.5px;border-radius:9px}
+.btn-p{background:linear-gradient(180deg,#10A163 0%,#02774A 100%);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 1px 2px rgba(6,78,50,.35),0 8px 20px -6px rgba(2,119,74,.6)}
+.btn-p:hover{background:linear-gradient(180deg,#0E9059 0%,#066A43 100%);transform:translateY(-1px)}
+.btn-g{background:#fff;color:#0F1A14;border:1px solid #D5DDD9;box-shadow:0 1px 2px rgba(15,26,20,.05)}
+.btn-g:hover{border-color:#0F1A14}
+.btn-d{background:#0F1A14;color:#fff}
+.btn-d:hover{background:#26332B}
+.btn-r{background:#fff;color:#A60203;border:1px solid #F1C4C4}
+.btn-r:hover{background:#FDECEC}
+.chip{display:inline-flex;align-items:center;gap:7px;height:26px;padding:0 11px;border-radius:999px;font-size:12.5px;font-weight:600;white-space:nowrap}
+.chip i{width:6px;height:6px;border-radius:50%;display:inline-block;background:currentColor}
+.c-ok{background:#E8F4EE;color:#06603B}
+.c-warn{background:#FEF3E2;color:#92400E}
+.c-bad{background:#FDECEC;color:#A60203}
+.c-info{background:#E6F0FA;color:#03509A}
+.c-mute{background:#EBF0ED;color:#4A554E}
+.card{background:#fff;border:1px solid #E3E9E6;border-radius:18px;box-shadow:0 1px 2px rgba(15,26,20,.04),0 12px 32px -18px rgba(15,26,20,.14)}
+.lift{transition:transform .2s,box-shadow .2s,border-color .2s}
+.lift:hover{transform:translateY(-2px);border-color:#D5DDD9;box-shadow:0 1px 2px rgba(15,26,20,.05),0 18px 40px -18px rgba(15,26,20,.22)}
+.lbl{font-size:13px;font-weight:600;color:#26332B}
+.hint{font-size:12.5px;color:#69746D}
+.input{width:100%;height:46px;padding:0 14px;border:1px solid #D5DDD9;border-radius:10px;background:#fff;font-family:inherit;font-size:15px;color:#0F1A14;transition:border-color .15s,box-shadow .15s}
+.input:hover{border-color:#9CA69F}
+.input:focus{outline:none;border-color:#02774A;box-shadow:0 0 0 4px rgba(2,119,74,.14)}
+.input-bad{border-color:#D90305;background:#FFF9F9}
+.input-bad:focus{border-color:#D90305;box-shadow:0 0 0 4px rgba(217,3,5,.12)}
+.navl{display:flex;align-items:center;gap:12px;height:40px;padding:0 12px;border-radius:9px;font-size:14px;font-weight:500;color:#3B463F;transition:background .12s,color .12s}
+.navl:hover{background:#EEF2F0;color:#0F1A14}
+.navl.on{background:#E8F4EE;color:#064E32;font-weight:600}
+.tr{transition:background .12s}
+.tr:hover{background:#F9FBFA}
+.link{color:#02774A;font-weight:600}
+.link:hover{text-decoration:underline}
+.pub a.pl{color:#3B463F;font-size:14.5px;font-weight:500;transition:color .12s}
+.pub a.pl:hover{color:#02774A}
+details>summary{list-style:none;cursor:pointer}
+details>summary::-webkit-details-marker{display:none}
+.noprint{}
+@media print{.noprint{display:none}}
+</style>
+
+
+</head>
+<body>
+
+<div style="width:100%;min-height:1000px;background:radial-gradient(55% 45% at 15% 0%,rgba(3,136,83,.20),transparent 62%),radial-gradient(45% 40% at 88% 4%,rgba(3,103,191,.17),transparent 62%),radial-gradient(38% 34% at 55% 28%,rgba(18,126,41,.09),transparent 70%),#F5F7F6;color:#0F1A14"><header class="pub" style="position:relative;z-index:10;padding:18px 24px 0">
+<div style="max-width:1120px;margin:0 auto;height:60px;padding:0 10px 0 22px;display:flex;align-items:center;justify-content:space-between;border-radius:999px;background:rgba(255,255,255,.8);backdrop-filter:blur(14px);border:1px solid rgba(15,26,20,.08);box-shadow:0 1px 2px rgba(15,26,20,.04),0 14px 34px -18px rgba(15,26,20,.22)">
+<a href="index.html"><div style="display:flex;align-items:center;gap:11px"><img src="assets/naccima-logo.png" alt="NACCIMA logo" style="width:31px;height:34px;object-fit:contain"><div style="display:flex;flex-direction:column;line-height:1.1"><span style="font-weight:700;font-size:14px;letter-spacing:.01em;color:#0F1A14">NACCIMA</span><span style="font-size:10px;color:#69746D;font-weight:500">e-Certificate</span></div></div></a>
+<nav style="display:flex;gap:30px"><a class="pl" href="#how">How it works</a><a class="pl" href="#roles">Who it serves</a><a class="pl" href="#membership">Membership</a><a class="pl" href="Verify.html">Verify</a></nav>
+<div style="display:flex;align-items:center;gap:8px"><a class="btn btn-sm" href="Dashboard.html" style="border-radius:999px;color:#26332B">Sign in</a><a class="btn btn-p btn-sm" href="CertificateType.html" style="border-radius:999px;padding:0 18px">Get started</a></div>
+</div></header>
+<section style="max-width:1200px;margin:0 auto;padding:72px 40px 96px;display:grid;grid-template-columns:minmax(0,1fr) 440px;gap:64px;align-items:start">
+<div style="display:flex;flex-direction:column;gap:30px">
+<div style="display:flex;flex-direction:column;gap:14px"><span class="eyebrow">Public verification</span><h1 class="serif" style="font-size:68px;line-height:1">Verify a <em>certificate</em>.</h1>
+<p style="font-size:18px;line-height:1.55;color:#3B463F;max-width:520px">Enter the certificate number or scan its QR code. No account needed.</p></div>
+<div style="display:flex;gap:10px;padding:8px;background:#fff;border:1px solid #D5DDD9;border-radius:16px;box-shadow:0 12px 32px -18px rgba(15,26,20,.25)">
+<div style="flex:1;display:flex;align-items:center;gap:12px;padding:0 14px;color:#69746D"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input class="mono" type="text" value="NAC-ECO-2026-000000" style="flex:1;border:0;outline:none;font-size:17px;background:transparent;color:#0F1A14;height:52px"></div><a class="btn btn-p btn-lg" href="Verify.html" style="">Verify</a></div>
+<div class="card" style="overflow:hidden">
+<div style="display:flex;align-items:center;gap:16px;padding:22px 28px;background:linear-gradient(90deg,#E8F4EE,#F4FAF7);border-bottom:1px solid #CFE6DA">
+<span style="width:48px;height:48px;border-radius:50%;background:#02774A;color:#fff;display:flex;align-items:center;justify-content:center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>
+<div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:19px;font-weight:700;color:#064E32">Valid certificate</span><span style="font-size:13.5px;color:#3B463F">Signature verified against the NACCIMA record.</span></div></div>
+<div style="padding:8px 28px 24px">
+<div style="display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-top:1px solid #EDF1EF;font-size:14.5px"><span style="color:#69746D">Certificate number</span><span style="font-weight:600;text-align:right"><span class="mono" style="font-weight:500">NAC-ECO-2026-000000</span></span></div><div style="display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-top:1px solid #EDF1EF;font-size:14.5px"><span style="color:#69746D">Exporter</span><span style="font-weight:600;text-align:right">Sample Exporter Ltd</span></div><div style="display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-top:1px solid #EDF1EF;font-size:14.5px"><span style="color:#69746D">Goods</span><span style="font-weight:600;text-align:right">Dried fermented cocoa beans, 20,000 kg</span></div><div style="display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-top:1px solid #EDF1EF;font-size:14.5px"><span style="color:#69746D">Destination</span><span style="font-weight:600;text-align:right">Netherlands</span></div><div style="display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-top:1px solid #EDF1EF;font-size:14.5px"><span style="color:#69746D">Issued by</span><span style="font-weight:600;text-align:right">[CHAMBER], NACCIMA</span></div><div style="display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-top:1px solid #EDF1EF;font-size:14.5px"><span style="color:#69746D">Signed by</span><span style="font-weight:600;text-align:right">[Officer name]</span></div><div style="display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-top:1px solid #EDF1EF;font-size:14.5px"><span style="color:#69746D">Issued on</span><span style="font-weight:600;text-align:right">[Issue date]</span></div><div style="display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-top:1px solid #EDF1EF;font-size:14.5px"><span style="color:#69746D">Status</span><span style="font-weight:600;text-align:right"><span class="chip c-ok"><i></i>Active</span></span></div></div>
+<div style="padding:16px 28px;background:#F9FBFA;border-top:1px solid #EDF1EF;display:flex;justify-content:space-between;align-items:center"><span class="hint">Specimen result for design review</span><a class="link" href="Certificate.html" style="font-size:14px;display:flex;align-items:center;gap:6px">View certificate<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div></div>
+<div style="display:flex;flex-direction:column;gap:20px;position:sticky;top:24px">
+<div style="display:flex;justify-content:center;transform:rotate(1.5deg)"><div style="width:380px;background:#FEFDFA;border:1px solid #E3E9E6;border-radius:14px;overflow:hidden;box-shadow:0 2px 4px rgba(15,26,20,.06),0 30px 60px -20px rgba(15,26,20,.35);">
+<div style="display:flex;height:5px;width:100%;border-radius:0px;overflow:hidden"><i style="flex:1;background:#D90305"></i><i style="flex:1;background:#0367BF"></i><i style="flex:1;background:#127E29"></i><i style="flex:1;background:#38424B"></i></div>
+<div style="padding:26px;display:flex;flex-direction:column;gap:18px">
+<div style="display:flex;justify-content:space-between;align-items:center"><div style="display:flex;align-items:center;gap:11px"><img src="assets/naccima-logo.png" alt="NACCIMA logo" style="width:28px;height:30px;object-fit:contain"><span style="font-weight:700;font-size:13px;color:#0F1A14">NACCIMA</span></div><span class="mono" style="font-size:10.5px;color:#3B463F">NAC-ECO-2026-000000</span></div>
+<div style="display:flex;flex-direction:column;gap:4px"><span class="sf" style="font-size:30px;line-height:1.05">Certificate of Origin</span><span style="font-size:11px;color:#69746D">Specimen for design review</span></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:14px 0;border-top:1px solid #E3E9E6;border-bottom:1px solid #E3E9E6">
+<div style="display:flex;flex-direction:column;gap:3px"><span style="font-size:8.5px;font-weight:700;letter-spacing:.1em;color:#69746D">EXPORTER</span><span style="font-size:12px;font-weight:600">Sample Exporter Ltd</span></div><div style="display:flex;flex-direction:column;gap:3px"><span style="font-size:8.5px;font-weight:700;letter-spacing:.1em;color:#69746D">CONSIGNEE</span><span style="font-size:12px;font-weight:600">Sample Importer BV</span></div>
+<div style="grid-column:span 2;display:flex;flex-direction:column;gap:3px"><span style="font-size:8.5px;font-weight:700;letter-spacing:.1em;color:#69746D">GOODS</span><span style="font-size:12px;font-weight:600">Dried fermented cocoa beans</span></div>
+<div style="display:flex;flex-direction:column;gap:3px"><span style="font-size:8.5px;font-weight:700;letter-spacing:.1em;color:#69746D">ORIGIN</span><span style="font-size:12px;font-weight:600">Nigeria</span></div><div style="display:flex;flex-direction:column;gap:3px"><span style="font-size:8.5px;font-weight:700;letter-spacing:.1em;color:#69746D">DESTINATION</span><span style="font-size:12px;font-weight:600">Netherlands</span></div>
+</div>
+<div style="display:flex;justify-content:space-between;align-items:flex-end">
+<div style="display:flex;flex-direction:column;gap:6px"><div style="width:130px;height:1px;background:#0F1A14"></div><span style="font-size:10px;color:#69746D">[Authorised officer signature]</span></div>
+<svg width="62" height="62" viewBox="0 0 33 33" fill="#0F1A14" shape-rendering="crispEdges"><rect x="0" y="0" width="7" height="1"/><rect x="9" y="0" width="1" height="1"/><rect x="11" y="0" width="1" height="1"/><rect x="16" y="0" width="1" height="1"/><rect x="18" y="0" width="6" height="1"/><rect x="26" y="0" width="7" height="1"/><rect x="0" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="9" y="1" width="1" height="1"/><rect x="11" y="1" width="2" height="1"/><rect x="15" y="1" width="1" height="1"/><rect x="18" y="1" width="1" height="1"/><rect x="20" y="1" width="2" height="1"/><rect x="24" y="1" width="1" height="1"/><rect x="26" y="1" width="1" height="1"/><rect x="32" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="2" y="2" width="3" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="8" y="2" width="1" height="1"/><rect x="10" y="2" width="1" height="1"/><rect x="12" y="2" width="1" height="1"/><rect x="14" y="2" width="3" height="1"/><rect x="20" y="2" width="2" height="1"/><rect x="23" y="2" width="1" height="1"/><rect x="26" y="2" width="1" height="1"/><rect x="28" y="2" width="3" height="1"/><rect x="32" y="2" width="1" height="1"/><rect x="0" y="3" width="1" height="1"/><rect x="2" y="3" width="3" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="8" y="3" width="2" height="1"/><rect x="12" y="3" width="1" height="1"/><rect x="18" y="3" width="2" height="1"/><rect x="26" y="3" width="1" height="1"/><rect x="28" y="3" width="3" height="1"/><rect x="32" y="3" width="1" height="1"/><rect x="0" y="4" width="1" height="1"/><rect x="2" y="4" width="3" height="1"/><rect x="6" y="4" width="1" height="1"/><rect x="8" y="4" width="1" height="1"/><rect x="10" y="4" width="3" height="1"/><rect x="14" y="4" width="3" height="1"/><rect x="20" y="4" width="1" height="1"/><rect x="22" y="4" width="3" height="1"/><rect x="26" y="4" width="1" height="1"/><rect x="28" y="4" width="3" height="1"/><rect x="32" y="4" width="1" height="1"/><rect x="0" y="5" width="1" height="1"/><rect x="6" y="5" width="1" height="1"/><rect x="8" y="5" width="1" height="1"/><rect x="11" y="5" width="2" height="1"/><rect x="14" y="5" width="1" height="1"/><rect x="18" y="5" width="2" height="1"/><rect x="21" y="5" width="1" height="1"/><rect x="26" y="5" width="1" height="1"/><rect x="32" y="5" width="1" height="1"/><rect x="0" y="6" width="7" height="1"/><rect x="8" y="6" width="1" height="1"/><rect x="10" y="6" width="1" height="1"/><rect x="12" y="6" width="1" height="1"/><rect x="14" y="6" width="1" height="1"/><rect x="16" y="6" width="1" height="1"/><rect x="18" y="6" width="1" height="1"/><rect x="20" y="6" width="1" height="1"/><rect x="22" y="6" width="1" height="1"/><rect x="24" y="6" width="1" height="1"/><rect x="26" y="6" width="7" height="1"/><rect x="8" y="7" width="1" height="1"/><rect x="11" y="7" width="1" height="1"/><rect x="14" y="7" width="1" height="1"/><rect x="16" y="7" width="1" height="1"/><rect x="19" y="7" width="4" height="1"/><rect x="0" y="8" width="1" height="1"/><rect x="2" y="8" width="5" height="1"/><rect x="13" y="8" width="1" height="1"/><rect x="17" y="8" width="3" height="1"/><rect x="23" y="8" width="2" height="1"/><rect x="26" y="8" width="5" height="1"/><rect x="3" y="9" width="3" height="1"/><rect x="7" y="9" width="1" height="1"/><rect x="10" y="9" width="1" height="1"/><rect x="12" y="9" width="2" height="1"/><rect x="16" y="9" width="6" height="1"/><rect x="23" y="9" width="1" height="1"/><rect x="26" y="9" width="2" height="1"/><rect x="29" y="9" width="2" height="1"/><rect x="1" y="10" width="1" height="1"/><rect x="3" y="10" width="8" height="1"/><rect x="13" y="10" width="3" height="1"/><rect x="17" y="10" width="1" height="1"/><rect x="20" y="10" width="2" height="1"/><rect x="25" y="10" width="2" height="1"/><rect x="28" y="10" width="1" height="1"/><rect x="30" y="10" width="2" height="1"/><rect x="0" y="11" width="1" height="1"/><rect x="8" y="11" width="2" height="1"/><rect x="13" y="11" width="1" height="1"/><rect x="15" y="11" width="1" height="1"/><rect x="17" y="11" width="2" height="1"/><rect x="21" y="11" width="1" height="1"/><rect x="24" y="11" width="2" height="1"/><rect x="28" y="11" width="4" height="1"/><rect x="1" y="12" width="1" height="1"/><rect x="3" y="12" width="2" height="1"/><rect x="6" y="12" width="1" height="1"/><rect x="8" y="12" width="1" height="1"/><rect x="12" y="12" width="1" height="1"/><rect x="14" y="12" width="3" height="1"/><rect x="19" y="12" width="1" height="1"/><rect x="23" y="12" width="2" height="1"/><rect x="27" y="12" width="3" height="1"/><rect x="4" y="13" width="1" height="1"/><rect x="10" y="13" width="2" height="1"/><rect x="15" y="13" width="1" height="1"/><rect x="17" y="13" width="2" height="1"/><rect x="22" y="13" width="6" height="1"/><rect x="30" y="13" width="3" height="1"/><rect x="1" y="14" width="2" height="1"/><rect x="4" y="14" width="3" height="1"/><rect x="8" y="14" width="4" height="1"/><rect x="15" y="14" width="3" height="1"/><rect x="22" y="14" width="1" height="1"/><rect x="24" y="14" width="3" height="1"/><rect x="28" y="14" width="2" height="1"/><rect x="31" y="14" width="1" height="1"/><rect x="2" y="15" width="1" height="1"/><rect x="4" y="15" width="1" height="1"/><rect x="9" y="15" width="2" height="1"/><rect x="13" y="15" width="3" height="1"/><rect x="18" y="15" width="1" height="1"/><rect x="21" y="15" width="1" height="1"/><rect x="23" y="15" width="1" height="1"/><rect x="25" y="15" width="2" height="1"/><rect x="28" y="15" width="1" height="1"/><rect x="30" y="15" width="1" height="1"/><rect x="0" y="16" width="1" height="1"/><rect x="2" y="16" width="1" height="1"/><rect x="6" y="16" width="1" height="1"/><rect x="10" y="16" width="3" height="1"/><rect x="15" y="16" width="3" height="1"/><rect x="22" y="16" width="1" height="1"/><rect x="24" y="16" width="2" height="1"/><rect x="27" y="16" width="2" height="1"/><rect x="32" y="16" width="1" height="1"/><rect x="0" y="17" width="1" height="1"/><rect x="3" y="17" width="1" height="1"/><rect x="5" y="17" width="1" height="1"/><rect x="8" y="17" width="2" height="1"/><rect x="12" y="17" width="2" height="1"/><rect x="16" y="17" width="1" height="1"/><rect x="18" y="17" width="4" height="1"/><rect x="23" y="17" width="1" height="1"/><rect x="25" y="17" width="3" height="1"/><rect x="29" y="17" width="2" height="1"/><rect x="1" y="18" width="3" height="1"/><rect x="6" y="18" width="1" height="1"/><rect x="8" y="18" width="2" height="1"/><rect x="11" y="18" width="2" height="1"/><rect x="15" y="18" width="2" height="1"/><rect x="18" y="18" width="1" height="1"/><rect x="20" y="18" width="2" height="1"/><rect x="24" y="18" width="1" height="1"/><rect x="27" y="18" width="2" height="1"/><rect x="30" y="18" width="2" height="1"/><rect x="2" y="19" width="1" height="1"/><rect x="4" y="19" width="1" height="1"/><rect x="8" y="19" width="4" height="1"/><rect x="13" y="19" width="1" height="1"/><rect x="15" y="19" width="2" height="1"/><rect x="19" y="19" width="1" height="1"/><rect x="21" y="19" width="1" height="1"/><rect x="23" y="19" width="2" height="1"/><rect x="26" y="19" width="5" height="1"/><rect x="32" y="19" width="1" height="1"/><rect x="4" y="20" width="5" height="1"/><rect x="11" y="20" width="1" height="1"/><rect x="13" y="20" width="1" height="1"/><rect x="18" y="20" width="1" height="1"/><rect x="27" y="20" width="1" height="1"/><rect x="29" y="20" width="1" height="1"/><rect x="31" y="20" width="2" height="1"/><rect x="0" y="21" width="3" height="1"/><rect x="4" y="21" width="2" height="1"/><rect x="7" y="21" width="1" height="1"/><rect x="10" y="21" width="1" height="1"/><rect x="12" y="21" width="1" height="1"/><rect x="15" y="21" width="2" height="1"/><rect x="22" y="21" width="5" height="1"/><rect x="29" y="21" width="1" height="1"/><rect x="32" y="21" width="1" height="1"/><rect x="0" y="22" width="1" height="1"/><rect x="2" y="22" width="2" height="1"/><rect x="6" y="22" width="4" height="1"/><rect x="11" y="22" width="4" height="1"/><rect x="22" y="22" width="1" height="1"/><rect x="24" y="22" width="2" height="1"/><rect x="28" y="22" width="4" height="1"/><rect x="0" y="23" width="1" height="1"/><rect x="2" y="23" width="1" height="1"/><rect x="4" y="23" width="1" height="1"/><rect x="7" y="23" width="1" height="1"/><rect x="16" y="23" width="1" height="1"/><rect x="21" y="23" width="1" height="1"/><rect x="23" y="23" width="2" height="1"/><rect x="26" y="23" width="2" height="1"/><rect x="29" y="23" width="2" height="1"/><rect x="32" y="23" width="1" height="1"/><rect x="0" y="24" width="1" height="1"/><rect x="2" y="24" width="2" height="1"/><rect x="5" y="24" width="2" height="1"/><rect x="9" y="24" width="2" height="1"/><rect x="12" y="24" width="2" height="1"/><rect x="17" y="24" width="1" height="1"/><rect x="22" y="24" width="1" height="1"/><rect x="24" y="24" width="5" height="1"/><rect x="30" y="24" width="1" height="1"/><rect x="8" y="25" width="1" height="1"/><rect x="10" y="25" width="3" height="1"/><rect x="16" y="25" width="2" height="1"/><rect x="19" y="25" width="3" height="1"/><rect x="23" y="25" width="2" height="1"/><rect x="28" y="25" width="1" height="1"/><rect x="30" y="25" width="1" height="1"/><rect x="0" y="26" width="7" height="1"/><rect x="9" y="26" width="1" height="1"/><rect x="11" y="26" width="1" height="1"/><rect x="13" y="26" width="5" height="1"/><rect x="20" y="26" width="2" height="1"/><rect x="23" y="26" width="2" height="1"/><rect x="26" y="26" width="1" height="1"/><rect x="28" y="26" width="1" height="1"/><rect x="30" y="26" width="2" height="1"/><rect x="0" y="27" width="1" height="1"/><rect x="6" y="27" width="1" height="1"/><rect x="8" y="27" width="1" height="1"/><rect x="11" y="27" width="1" height="1"/><rect x="13" y="27" width="1" height="1"/><rect x="15" y="27" width="1" height="1"/><rect x="17" y="27" width="3" height="1"/><rect x="21" y="27" width="1" height="1"/><rect x="23" y="27" width="2" height="1"/><rect x="28" y="27" width="5" height="1"/><rect x="0" y="28" width="1" height="1"/><rect x="2" y="28" width="3" height="1"/><rect x="6" y="28" width="1" height="1"/><rect x="8" y="28" width="1" height="1"/><rect x="10" y="28" width="2" height="1"/><rect x="13" y="28" width="4" height="1"/><rect x="20" y="28" width="1" height="1"/><rect x="24" y="28" width="6" height="1"/><rect x="31" y="28" width="2" height="1"/><rect x="0" y="29" width="1" height="1"/><rect x="2" y="29" width="3" height="1"/><rect x="6" y="29" width="1" height="1"/><rect x="8" y="29" width="1" height="1"/><rect x="14" y="29" width="2" height="1"/><rect x="17" y="29" width="3" height="1"/><rect x="21" y="29" width="5" height="1"/><rect x="28" y="29" width="5" height="1"/><rect x="0" y="30" width="1" height="1"/><rect x="2" y="30" width="3" height="1"/><rect x="6" y="30" width="1" height="1"/><rect x="8" y="30" width="3" height="1"/><rect x="12" y="30" width="1" height="1"/><rect x="15" y="30" width="2" height="1"/><rect x="18" y="30" width="1" height="1"/><rect x="21" y="30" width="1" height="1"/><rect x="23" y="30" width="2" height="1"/><rect x="26" y="30" width="2" height="1"/><rect x="29" y="30" width="2" height="1"/><rect x="0" y="31" width="1" height="1"/><rect x="6" y="31" width="1" height="1"/><rect x="9" y="31" width="2" height="1"/><rect x="12" y="31" width="4" height="1"/><rect x="18" y="31" width="1" height="1"/><rect x="21" y="31" width="3" height="1"/><rect x="28" y="31" width="3" height="1"/><rect x="0" y="32" width="7" height="1"/><rect x="8" y="32" width="1" height="1"/><rect x="10" y="32" width="1" height="1"/><rect x="13" y="32" width="3" height="1"/><rect x="17" y="32" width="1" height="1"/><rect x="22" y="32" width="1" height="1"/><rect x="24" y="32" width="1" height="1"/><rect x="27" y="32" width="1" height="1"/><rect x="30" y="32" width="2" height="1"/></svg>
+</div>
+</div>
+</div></div>
+<div class="card" style="padding:20px;display:flex;gap:14px;align-items:center"><span style="color:#02774A"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><path d="M14 14h2v2h-2zM18 18h2v2h-2zM18 14h2M14 18h2"/></svg></span><span style="font-size:14px;line-height:1.5;color:#3B463F">Every certificate carries a QR code that opens this page with the number filled in.</span></div></div>
+</section></div>
+
+
+<script>
+document.querySelectorAll('a[href="CertificateType.html"]').forEach((link) => {
+	if (link.textContent.includes('Get started')) link.href = 'Registration.html';
+});
+
+(() => {
+	const revoked = localStorage.getItem('naccima-demo-certificate-revoked') === 'true';
+	const spans = Array.from(document.querySelectorAll('span'));
+	const heading = spans.find((element) => element.textContent.trim() === 'Valid certificate');
+	if (!heading) return;
+	const banner = heading.parentElement.parentElement;
+	const explanation = heading.nextElementSibling;
+	heading.textContent = revoked ? 'Revoked certificate' : 'Active specimen';
+	heading.style.color = revoked ? '#A60203' : '#064E32';
+	if (explanation) explanation.textContent = revoked
+		? 'This specimen record has been revoked in the administrator demo.'
+		: 'Demo record only. No live signature check is performed.';
+	banner.style.background = revoked ? '#FDECEC' : '#E8F4EE';
+	banner.style.borderColor = revoked ? '#F1C4C4' : '#CFE6DA';
+	const icon = banner.querySelector('span');
+	if (icon) {
+		icon.style.background = revoked ? '#A60203' : '#02774A';
+		icon.innerHTML = revoked ? '&#10005;' : '&#10003;';
+		icon.setAttribute('aria-hidden', 'true');
+	}
+	const statusLabel = spans.find((element) => element.textContent.trim() === 'Status');
+	const statusRow = statusLabel && statusLabel.parentElement;
+	if (statusRow) {
+		const values = statusRow.querySelectorAll('span');
+		const statusValue = values[values.length - 1];
+		if (statusValue) statusValue.textContent = revoked ? 'Revoked' : 'Active specimen';
+	}
+})();
+</script>
+</body>
+</html>

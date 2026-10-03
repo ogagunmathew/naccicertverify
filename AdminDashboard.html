@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Operations and audit | NACCIMA e-Certificate</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+:root{--bg:#F5F7F6;--surface:#fff;--ink:#0F1A14;--ink2:#3B463F;--mute:#69746D;--line:#E3E9E6;--green:#02774A;--green-deep:#064E32;--tint:#E8F4EE;--blue:#0367BF;--red:#A60203;--warn:#92400E}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px 'Geist',system-ui,sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}button,select{font:inherit}h1,h2,h3,p{margin:0}.mono{font-family:'Geist Mono',monospace}.hint{font-size:12px;color:var(--mute)}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:38px;padding:0 13px;border:1px solid #D5DDD9;border-radius:8px;background:#fff;color:var(--ink);font-size:13px;font-weight:600;cursor:pointer}.btn-primary{background:var(--green);border-color:var(--green);color:#fff}.btn-danger{color:var(--red);border-color:#E9CACA}.btn-danger:hover{background:#FFF5F5}.chip{display:inline-flex;align-items:center;gap:6px;padding:5px 9px;border-radius:999px;background:#EEF2F0;color:#4A554E;font-size:11px;font-weight:600;white-space:nowrap}.chip::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor}.ok{background:var(--tint);color:var(--green-deep)}.warning{background:#FEF3E2;color:var(--warn)}.bad{background:#FDECEC;color:var(--red)}
+.shell{min-height:100vh;display:grid;grid-template-columns:238px minmax(0,1fr)}aside{padding:24px 16px;background:#fff;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:30px}.brand{display:flex;align-items:center;gap:10px;padding:0 8px;font-weight:700}.brand img{width:34px;height:38px;object-fit:contain}.brand small{display:block;color:var(--mute);font-size:11px;font-weight:500}.nav{display:grid;gap:3px}.nav a{padding:11px 12px;border-radius:8px;color:var(--ink2);font-size:13px}.nav a[aria-current=page],.nav a:hover{background:var(--tint);color:var(--green-deep);font-weight:600}.profile{margin-top:auto;padding:12px;border-top:1px solid var(--line);color:var(--ink2);font-size:12px;line-height:1.5}.profile strong{display:block;color:var(--ink)}main{min-width:0;padding:30px clamp(20px,3.5vw,52px) 56px}.top{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-bottom:25px;border-bottom:1px solid var(--line)}.crumb{color:var(--mute);font-size:12px}.role{padding:7px 10px;border:1px solid var(--line);border-radius:7px;background:#fff;font-size:12px}.titlebar{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;padding:28px 0 22px}.titlebar h1{font-size:30px;letter-spacing:0}.titlebar p{margin-top:6px;color:var(--mute);font-size:13px}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#fff}.metric{padding:18px 20px;border-right:1px solid var(--line)}.metric:last-child{border:0}.metric span{display:block;color:var(--mute);font-size:12px}.metric strong{display:block;margin-top:8px;font-size:27px;font-variant-numeric:tabular-nums}.metric small{display:block;margin-top:4px;color:var(--green);font-size:11px}.section{margin-top:30px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:13px}.section-head h2{font-size:16px}.controls{display:flex;align-items:center;gap:9px}.select{height:38px;padding:0 32px 0 11px;border:1px solid #D5DDD9;border-radius:8px;background:#fff;color:var(--ink2);font-size:12px}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:9px;background:#fff}table{width:100%;border-collapse:collapse;text-align:left}th{padding:11px 14px;background:#F9FBFA;color:var(--mute);font-size:10px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}td{padding:13px 14px;border-top:1px solid #EDF1EF;color:var(--ink2);font-size:12px;white-space:nowrap}td strong{color:var(--ink);font-weight:600}.row-action{display:flex;align-items:center;gap:8px}.lower{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(280px,.7fr);gap:28px}.bars{display:grid;grid-template-columns:repeat(6,1fr);align-items:end;gap:14px;height:150px;padding:18px 8px 0;border-bottom:1px solid var(--line);background:linear-gradient(to bottom,transparent 32%,#E9EEEB 33%,transparent 34%,transparent 65%,#E9EEEB 66%,transparent 67%)}.bar-col{height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:8px;color:var(--mute);font-size:10px}.bar{width:min(30px,72%);min-height:5px;border-radius:4px 4px 0 0;background:#62A987}.bar-col:nth-child(4n+2) .bar{background:#528FC0}.legend{display:flex;gap:18px;padding:12px 8px 0;color:var(--mute);font-size:11px}.legend span{display:flex;align-items:center;gap:6px}.legend i{width:8px;height:8px;border-radius:2px;background:#62A987}.legend span+span i{background:#528FC0}.audit-list{border-top:1px solid var(--line)}.audit-item{display:grid;grid-template-columns:78px 1fr;gap:12px;padding:13px 0;border-bottom:1px solid var(--line);font-size:12px;line-height:1.5}.audit-time{color:var(--mute);font-family:'Geist Mono',monospace;font-size:10px}.audit-item strong{display:block;color:var(--ink);font-weight:600}.audit-item small{color:var(--mute)}.footnote{margin-top:14px;color:var(--mute);font-size:11px;line-height:1.5}
+@media(max-width:1000px){.shell{grid-template-columns:190px minmax(0,1fr)}.metrics{grid-template-columns:repeat(2,1fr)}.metric:nth-child(2){border-right:0}.metric:nth-child(n+3){border-top:1px solid var(--line)}}@media(max-width:720px){.shell{grid-template-columns:1fr}aside{padding:12px 16px;border-right:0;border-bottom:1px solid var(--line);gap:12px}.brand{padding:0}.nav{grid-template-columns:repeat(3,minmax(0,1fr))}.nav a{text-align:center;padding:9px 4px;font-size:11px}.profile{display:none}main{padding:22px 16px 40px}.titlebar{align-items:flex-start;flex-direction:column}.lower{grid-template-columns:1fr}.controls{flex-wrap:wrap}.section-head{align-items:flex-start;flex-direction:column}.metric{padding:15px}.metric strong{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="shell">
+<aside>
+<a class="brand" href="index.html"><img src="assets/naccima-logo.png" alt=""><span>NACCIMA<small>e-Certificate</small></span></a>
+<nav class="nav" aria-label="Administration"><a href="AdminDashboard.html" aria-current="page">Operations &amp; audit</a><a href="Review.html">Review queue</a><a href="CertificateTypesAdmin.html">Certificate types</a><a href="Certificate.html">Issued certificates</a><a href="Dashboard.html">Exporter view</a><a href="Verify.html">Public verification</a></nav>
+<div class="profile"><strong>NACCIMA Administrator</strong>Management access · Demo role</div>
+</aside>
+<main>
+<div class="top"><span class="crumb">Administration / Operations</span><span class="role">NACCIMA Administrator</span></div>
+<div class="titlebar"><div><h1>Operations and audit</h1><p>Application throughput, revenue and decisions across the certificate service.</p></div><button class="btn btn-primary" id="exportReport" type="button">Export report</button></div>
+<div class="metrics" aria-label="Reporting summary"><div class="metric"><span>Applications received</span><strong>1,284</strong><small>+12% vs. prior period</small></div><div class="metric"><span>Fees collected</span><strong>₦42.8m</strong><small>Across 1,106 payments</small></div><div class="metric"><span>Median processing time</span><strong>1.8 days</strong><small>Submission to decision</small></div><div class="metric"><span>Awaiting review</span><strong>47</strong><small>12 older than two days</small></div></div>
+<section class="section" aria-labelledby="applicationsHeading">
+<div class="section-head"><h2 id="applicationsHeading">Application register</h2><div class="controls"><label class="hint" for="statusFilter">Status</label><select class="select" id="statusFilter"><option value="all">All applications</option><option value="review">In review</option><option value="issued">Issued</option><option value="returned">Returned</option></select></div></div>
+<div class="table-wrap"><table><thead><tr><th>Reference</th><th>Exporter</th><th>Certificate</th><th>Submitted</th><th>Status</th><th>Action</th></tr></thead><tbody id="applicationRows">
+<tr data-status="review"><td class="mono">NAC-2026-004218</td><td><strong>Sample Exporter Ltd</strong></td><td>Certificate of Origin</td><td>02 Oct 2026</td><td><span class="chip warning">In review</span></td><td>Open review</td></tr>
+<tr data-status="issued"><td class="mono">NAC-ECO-2026-000000</td><td><strong>Sample Exporter Ltd</strong></td><td>Certificate of Origin</td><td>01 Oct 2026</td><td><span class="chip ok" id="specimenStatus">Issued · specimen</span></td><td><button class="btn btn-danger" id="revokeSpecimen" type="button">Revoke specimen</button></td></tr>
+<tr data-status="returned"><td class="mono">NAC-2026-004187</td><td><strong>Sample Exporter Ltd</strong></td><td>Certificate of Origin</td><td>30 Sep 2026</td><td><span class="chip bad">Returned</span></td><td>View request</td></tr>
+</tbody></table></div>
+<p class="footnote">Sample dashboard figures and records. The revoke action changes only this browser's demo state.</p>
+</section>
+<div class="lower">
+<section class="section" aria-labelledby="volumeHeading"><div class="section-head"><h2 id="volumeHeading">Monthly service activity</h2><span class="hint">Applications and certificates issued · Apr–Sep 2026</span></div><div class="bars" role="img" aria-label="Illustrative bar chart showing monthly applications and certificates issued from April through September"><div class="bar-col"><div class="bar" style="height:38%"></div><span>Apr</span></div><div class="bar-col"><div class="bar" style="height:26%"></div><span>Apr</span></div><div class="bar-col"><div class="bar" style="height:54%"></div><span>May</span></div><div class="bar-col"><div class="bar" style="height:38%"></div><span>May</span></div><div class="bar-col"><div class="bar" style="height:67%"></div><span>Jun</span></div><div class="bar-col"><div class="bar" style="height:49%"></div><span>Jun</span></div><div class="bar-col"><div class="bar" style="height:76%"></div><span>Jul</span></div><div class="bar-col"><div class="bar" style="height:55%"></div><span>Jul</span></div><div class="bar-col"><div class="bar" style="height:62%"></div><span>Aug</span></div><div class="bar-col"><div class="bar" style="height:47%"></div><span>Aug</span></div><div class="bar-col"><div class="bar" style="height:92%"></div><span>Sep</span></div><div class="bar-col"><div class="bar" style="height:66%"></div><span>Sep</span></div></div><div class="legend"><span><i></i>Applications</span><span><i></i>Certificates issued</span></div></section>
+<section class="section" aria-labelledby="auditHeading"><div class="section-head"><h2 id="auditHeading">Recent audit activity</h2><span class="hint">Latest recorded actions</span></div><div class="audit-list" id="auditList"><div class="audit-item"><span class="audit-time">10:42</span><div><strong>Application returned</strong><small>Officer A. Bello · NAC-2026-004187</small></div></div><div class="audit-item"><span class="audit-time">09:18</span><div><strong>Payment confirmed</strong><small>System · NAC-2026-004218</small></div></div><div class="audit-item"><span class="audit-time">08:51</span><div><strong>Certificate issued</strong><small>Officer M. Okafor · NAC-ECO-2026-000000</small></div></div></div></section>
+</div>
+</main>
+</div>
+<script>
+const statusFilter = document.getElementById('statusFilter');
+statusFilter.addEventListener('change', () => {
+  document.querySelectorAll('#applicationRows tr').forEach((row) => {
+    row.hidden = statusFilter.value !== 'all' && row.dataset.status !== statusFilter.value;
+  });
+});
+
+document.getElementById('exportReport').addEventListener('click', () => {
+  const csv = 'Reference,Exporter,Certificate,Submitted,Status\nNAC-2026-004218,Sample Exporter Ltd,Certificate of Origin,2026-10-02,In review\nNAC-ECO-2026-000000,Sample Exporter Ltd,Certificate of Origin,2026-10-01,Issued specimen\nNAC-2026-004187,Sample Exporter Ltd,Certificate of Origin,2026-09-30,Returned';
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(new Blob([csv], {type: 'text/csv'}));
+  link.download = 'naccima-demo-report.csv';
+  link.click();
+  URL.revokeObjectURL(link.href);
+});
+
+const revokeButton = document.getElementById('revokeSpecimen');
+const specimenStatus = document.getElementById('specimenStatus');
+const auditList = document.getElementById('auditList');
+const updateRevocationState = () => {
+  const revoked = localStorage.getItem('naccima-demo-certificate-revoked') === 'true';
+  revokeButton.textContent = revoked ? 'Restore demo status' : 'Revoke specimen';
+  revokeButton.classList.toggle('btn-danger', !revoked);
+  specimenStatus.textContent = revoked ? 'Revoked · demo' : 'Issued · specimen';
+  specimenStatus.className = revoked ? 'chip bad' : 'chip ok';
+};
+revokeButton.addEventListener('click', () => {
+  const currentlyRevoked = localStorage.getItem('naccima-demo-certificate-revoked') === 'true';
+  const revoked = !currentlyRevoked;
+  localStorage.setItem('naccima-demo-certificate-revoked', String(revoked));
+  updateRevocationState();
+  const entry = document.createElement('div');
+  entry.className = 'audit-item';
+  entry.innerHTML = `<span class="audit-time">Now</span><div><strong>Certificate ${revoked ? 'revoked' : 'restored for demo'}</strong><small>NACCIMA Administrator · NAC-ECO-2026-000000</small></div>`;
+  auditList.prepend(entry);
+});
+updateRevocationState();
+</script>
+</body>
+</html>

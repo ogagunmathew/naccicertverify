@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Payments | NACCIMA e-Certificate (prototype)</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif&display=swap">
+<style>
+:root{--bg:#F5F7F6;--surface:#FFFFFF;--ink:#0F1A14;--ink2:#3B463F;--mute:#69746D;--line:#E3E9E6;--line2:#D5DDD9;--green:#02774A;--green-deep:#064E32;--green-brand:#038853;--tint:#E8F4EE;--blue:#0367BF;--red:#D90305;--slate:#38424B;--night:#0B1F17}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Geist','Inter',system-ui,sans-serif;color:#0F1A14;background:#F5F7F6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4,p{margin:0}
+.serif{font-family:'Geist','Inter',system-ui,sans-serif;font-weight:600;letter-spacing:-0.035em}
+.sf{font-family:'Instrument Serif',Georgia,serif;font-weight:400;letter-spacing:-0.01em}
+h1 em,h2 em,.serif em{font-style:normal;background:linear-gradient(95deg,#0A9A5B 0%,#0367BF 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.mono{font-family:'Geist Mono',ui-monospace,monospace}
+.tnum{font-variant-numeric:tabular-nums}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:#69746D}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 20px;border-radius:10px;font-size:14.5px;font-weight:600;white-space:nowrap;cursor:pointer;transition:background .15s,border-color .15s,box-shadow .15s,transform .15s}
+.btn-lg{height:52px;padding:0 26px;font-size:15.5px;border-radius:12px}
+.btn-sm{height:36px;padding:0 14px;font-size:13.5px;border-radius:9px}
+.btn-p{background:linear-gradient(180deg,#10A163 0%,#02774A 100%);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 1px 2px rgba(6,78,50,.35),0 8px 20px -6px rgba(2,119,74,.6)}
+.btn-p:hover{background:linear-gradient(180deg,#0E9059 0%,#066A43 100%);transform:translateY(-1px)}
+.btn-g{background:#fff;color:#0F1A14;border:1px solid #D5DDD9;box-shadow:0 1px 2px rgba(15,26,20,.05)}
+.btn-g:hover{border-color:#0F1A14}
+.btn-d{background:#0F1A14;color:#fff}
+.btn-d:hover{background:#26332B}
+.btn-r{background:#fff;color:#A60203;border:1px solid #F1C4C4}
+.btn-r:hover{background:#FDECEC}
+.chip{display:inline-flex;align-items:center;gap:7px;height:26px;padding:0 11px;border-radius:999px;font-size:12.5px;font-weight:600;white-space:nowrap}
+.chip i{width:6px;height:6px;border-radius:50%;display:inline-block;background:currentColor}
+.c-ok{background:#E8F4EE;color:#06603B}
+.c-warn{background:#FEF3E2;color:#92400E}
+.c-bad{background:#FDECEC;color:#A60203}
+.c-info{background:#E6F0FA;color:#03509A}
+.c-mute{background:#EBF0ED;color:#4A554E}
+.card{background:#fff;border:1px solid #E3E9E6;border-radius:18px;box-shadow:0 1px 2px rgba(15,26,20,.04),0 12px 32px -18px rgba(15,26,20,.14)}
+.lift{transition:transform .2s,box-shadow .2s,border-color .2s}
+.lift:hover{transform:translateY(-2px);border-color:#D5DDD9;box-shadow:0 1px 2px rgba(15,26,20,.05),0 18px 40px -18px rgba(15,26,20,.22)}
+.lbl{font-size:13px;font-weight:600;color:#26332B}
+.hint{font-size:12.5px;color:#69746D}
+.input{width:100%;height:46px;padding:0 14px;border:1px solid #D5DDD9;border-radius:10px;background:#fff;font-family:inherit;font-size:15px;color:#0F1A14;transition:border-color .15s,box-shadow .15s}
+.input:hover{border-color:#9CA69F}
+.input:focus{outline:none;border-color:#02774A;box-shadow:0 0 0 4px rgba(2,119,74,.14)}
+.input-bad{border-color:#D90305;background:#FFF9F9}
+.input-bad:focus{border-color:#D90305;box-shadow:0 0 0 4px rgba(217,3,5,.12)}
+.navl{display:flex;align-items:center;gap:12px;height:40px;padding:0 12px;border-radius:9px;font-size:14px;font-weight:500;color:#3B463F;transition:background .12s,color .12s}
+.navl:hover{background:#EEF2F0;color:#0F1A14}
+.navl.on{background:#E8F4EE;color:#064E32;font-weight:600}
+.tr{transition:background .12s}
+.tr:hover{background:#F9FBFA}
+.link{color:#02774A;font-weight:600}
+.link:hover{text-decoration:underline}
+.pub a.pl{color:#3B463F;font-size:14.5px;font-weight:500;transition:color .12s}
+.pub a.pl:hover{color:#02774A}
+details>summary{list-style:none;cursor:pointer}
+details>summary::-webkit-details-marker{display:none}
+.noprint{}
+@media print{.noprint{display:none}}
+</style>
+
+
+</head>
+<body>
+
+<div style="width:100%;min-height:1060px;background:#F5F7F6;color:#0F1A14"><div style="display:flex;min-height:1060px">
+<aside style="width:264px;flex:none;background:#fff;border-right:1px solid #E3E9E6;padding:24px 16px;display:flex;flex-direction:column;gap:28px;min-height:100%">
+<a href="index.html" style="padding:0 8px"><div style="display:flex;align-items:center;gap:11px"><img src="assets/naccima-logo.png" alt="NACCIMA logo" style="width:37px;height:40px;object-fit:contain"><div style="display:flex;flex-direction:column;line-height:1.1"><span style="font-weight:700;font-size:17px;letter-spacing:.01em;color:#0F1A14">NACCIMA</span><span style="font-size:12px;color:#69746D;font-weight:500">e-Certificate</span></div></div></a>
+<nav style="display:flex;flex-direction:column;gap:3px"><a class="navl" href="Dashboard.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>Dashboard</span></a><a class="navl" href="CertificateType.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M12 12v6M9 15h6"/></svg><span>New application</span></a><a class="navl" href="Certificate.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><circle cx="12" cy="9" r="6"/><path d="M8.5 14l-1.5 7 5-3 5 3-1.5-7"/></svg><span>Certificates</span></a><a class="navl" href="Membership.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M4 21V5l8-2v18M20 21V9l-8-2M8 9h.01M8 13h.01M8 17h.01M16 13h.01M16 17h.01"/></svg><span>Membership</span></a><a class="navl on" href="Payments.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg><span>Payments</span></a><a class="navl" href="Verify.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><span>Verify a certificate</span></a></nav>
+<div style="margin-top:auto;display:flex;flex-direction:column;gap:14px">
+<details style="border-top:1px solid #E3E9E6;padding-top:14px">
+<summary class="navl" style="height:34px;font-size:13px;color:#69746D"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M9 3h6M10 3v6L4 19a2 2 0 0 0 2 3h12a2 2 0 0 0 2-3l-6-10V3"/></svg><span>Prototype states</span><span style="margin-left:auto"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M6 9l6 6 6-6"/></svg></span></summary>
+<div style="display:flex;flex-direction:column;gap:1px;padding-top:4px"><a class="navl" href="Review.html" style="height:34px;font-size:13px;color:#69746D">Officer queue</a><a class="navl" href="DashboardEmpty.html" style="height:34px;font-size:13px;color:#69746D">Empty dashboard</a><a class="navl" href="Returned.html" style="height:34px;font-size:13px;color:#69746D">Returned application</a><a class="navl" href="ApplicationError.html" style="height:34px;font-size:13px;color:#69746D">Validation errors</a><a class="navl" href="PaymentFailed.html" style="height:34px;font-size:13px;color:#69746D">Payment failed</a><a class="navl" href="MembershipExpired.html" style="height:34px;font-size:13px;color:#69746D">Expired membership</a></div>
+</details>
+<div style="display:flex;align-items:center;gap:11px;padding:10px;border:1px solid #E3E9E6;border-radius:12px">
+<div style="width:36px;height:36px;border-radius:50%;background:#064E32;color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center">SE</div>
+<div style="display:flex;flex-direction:column;line-height:1.25;min-width:0"><span style="font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Sample Exporter Ltd</span><span class="hint">Exporter account</span></div>
+</div>
+</div>
+</aside>
+<main style="flex:1;min-width:0;padding:28px 40px 56px;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:20px">
+<div style="display:flex;align-items:center;gap:10px;height:42px;width:380px;max-width:100%;padding:0 14px;background:#fff;border:1px solid #E3E9E6;border-radius:11px;color:#69746D;font-size:14px"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><span style="flex:1">Search applications and certificates</span><span class="mono" style="font-size:11.5px;border:1px solid #E3E9E6;border-radius:6px;padding:2px 6px;background:#F5F7F6">Ctrl K</span></div>
+<div style="display:flex;align-items:center;gap:12px"><span style="width:42px;height:42px;border-radius:11px;background:#fff;border:1px solid #E3E9E6;display:flex;align-items:center;justify-content:center;position:relative"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M6 9a6 6 0 1 1 12 0c0 5 2 6 2 6H4s2-1 2-6M10 20a2 2 0 0 0 4 0"/></svg><i style="position:absolute;top:10px;right:11px;width:8px;height:8px;border-radius:50%;background:#D90305;border:2px solid #fff"></i></span></div>
+</div>
+<div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px"><div style="display:flex;flex-direction:column;gap:8px"><h1 class="serif" style="font-size:34px;line-height:1.1">Payments</h1><p style="font-size:15px;color:#69746D;max-width:560px;line-height:1.5">Receipts and invoices for every certificate.</p></div></div><div class="card" style="padding:32px;display:flex;justify-content:space-between;align-items:center;gap:28px;background:linear-gradient(120deg,#E8F4EE,#fff 60%);border-color:#CFE6DA">
+<div style="display:flex;gap:22px;align-items:center"><span style="width:64px;height:64px;border-radius:50%;background:#02774A;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 8px rgba(2,119,74,.12)"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>
+<div style="display:flex;flex-direction:column;gap:6px"><span class="serif" style="font-size:32px;line-height:1.1">Payment received</span><span style="font-size:15px;color:#3B463F">₦31,500 for NAC-2026-004218. A receipt was sent to accounts@sampleexporter.example.</span></div></div>
+<div style="display:flex;gap:10px;flex:none"><span class="btn btn-g" style=""><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M12 4v12M7 11l5 5 5-5M4 20h16"/></svg>Download receipt</span><a class="btn btn-p" href="Dashboard.html" style="">Track application<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div>
+<div style="display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:24px;align-items:start"><div class="card" style="overflow:hidden"><div style="padding:20px 24px;display:flex;justify-content:space-between;align-items:center"><h2 style="font-size:17px;font-weight:700">Transactions</h2><span class="hint">Sample data</span></div>
+<div style="display:grid;grid-template-columns:1.3fr 1.5fr 1fr 1fr 90px;gap:14px;padding:10px 24px;background:#F9FBFA;border-top:1px solid #EDF1EF;font-size:11.5px;font-weight:600;letter-spacing:.08em;color:#69746D"><span>RECEIPT</span><span>FOR</span><span>DATE</span><span>AMOUNT</span><span>STATUS</span></div>
+<div class="tr" style="background:#F9FBFA;display:grid;grid-template-columns:1.3fr 1.5fr 1fr 1fr 90px;gap:14px;align-items:center;padding:16px 24px;border-top:1px solid #EDF1EF;font-size:14px"><span class="mono" style="font-size:13px">RC-2026-009118</span><span>Certificate NAC-2026-004218</span><span style="color:#69746D">01 Oct 2026</span><span class="tnum" style="font-weight:600">₦31,500</span><span><span class="chip c-ok"><i></i>Paid</span></span></div><div class="tr" style="display:grid;grid-template-columns:1.3fr 1.5fr 1fr 1fr 90px;gap:14px;align-items:center;padding:16px 24px;border-top:1px solid #EDF1EF;font-size:14px"><span class="mono" style="font-size:13px">RC-2026-009071</span><span>Certificate NAC-2026-004187</span><span style="color:#69746D">28 Sep 2026</span><span class="tnum" style="font-weight:600">₦31,500</span><span><span class="chip c-ok"><i></i>Paid</span></span></div><div class="tr" style="display:grid;grid-template-columns:1.3fr 1.5fr 1fr 1fr 90px;gap:14px;align-items:center;padding:16px 24px;border-top:1px solid #EDF1EF;font-size:14px"><span class="mono" style="font-size:13px">RC-2026-008820</span><span>Certificate NAC-2026-004102</span><span style="color:#69746D">12 Sep 2026</span><span class="tnum" style="font-weight:600">₦31,500</span><span><span class="chip c-ok"><i></i>Paid</span></span></div><div class="tr" style="display:grid;grid-template-columns:1.3fr 1.5fr 1fr 1fr 90px;gap:14px;align-items:center;padding:16px 24px;border-top:1px solid #EDF1EF;font-size:14px"><span class="mono" style="font-size:13px">RC-2026-008214</span><span>Certificate NAC-2026-004063</span><span style="color:#69746D">03 Sep 2026</span><span class="tnum" style="font-weight:600">₦31,500</span><span><span class="chip c-ok"><i></i>Paid</span></span></div><div class="tr" style="display:grid;grid-template-columns:1.3fr 1.5fr 1fr 1fr 90px;gap:14px;align-items:center;padding:16px 24px;border-top:1px solid #EDF1EF;font-size:14px"><span class="mono" style="font-size:13px">RC-2026-008001</span><span>Certificate [REF]</span><span style="color:#69746D">28 Aug 2026</span><span class="tnum" style="font-weight:600">₦31,500</span><span><span class="chip c-warn"><i></i>Pending</span></span></div></div><div class="card" style="padding:26px;display:flex;flex-direction:column;gap:14px;position:sticky;top:24px">
+<div style="display:flex;justify-content:space-between;align-items:center"><div style="display:flex;align-items:center;gap:11px"><img src="assets/naccima-logo.png" alt="NACCIMA logo" style="width:29px;height:32px;object-fit:contain"><span style="font-weight:700;font-size:13px;color:#0F1A14">NACCIMA</span></div><span class="chip c-ok"><i></i>Paid</span></div>
+<div style="display:flex;flex-direction:column;gap:2px"><span class="eyebrow">Receipt</span><span class="mono" style="font-size:15px;font-weight:500">RC-2026-009118</span></div>
+<div style="border-top:1px dashed #D5DDD9;padding-top:10px"><div style="display:flex;justify-content:space-between;font-size:13.5px;padding:6px 0"><span style="color:#69746D">Certificate fee</span><span class="tnum" style="font-weight:600">₦25,000</span></div><div style="display:flex;justify-content:space-between;font-size:13.5px;padding:6px 0"><span style="color:#69746D">Document processing</span><span class="tnum" style="font-weight:600">₦5,000</span></div><div style="display:flex;justify-content:space-between;font-size:13.5px;padding:6px 0"><span style="color:#69746D">Platform charge</span><span class="tnum" style="font-weight:600">₦1,500</span></div></div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;border-top:1px dashed #D5DDD9;padding-top:14px"><b>Total paid</b><span class="serif tnum" style="font-size:34px;line-height:1">₦31,500</span></div>
+<span class="hint">Paid by card on 01 Oct 2026, 11:02. [Payment gateway to be confirmed]</span></div></div>
+</main>
+</div></div>
+
+
+</body>
+</html>
